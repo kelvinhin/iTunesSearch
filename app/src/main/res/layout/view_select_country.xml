@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/country_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:ccp_textGravity="LEFT"
+        app:ccp_showNameCode="true"
+        app:ccp_showPhoneCode="false"
+        app:ccp_showFlag="true"
+        app:ccp_clickable="true"
+        app:ccpDialog_keyboardAutoPopup="true"
+        app:ccpDialog_allowSearch="true"
+        app:ccpDialog_showFastScroller="true"
+        app:ccp_autoDetectCountry="true"/>
+
+</LinearLayout>
