@@ -1,19 +1,20 @@
 package com.kelvinhin.itunessearch
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.snackbar.Snackbar
+import com.kelvinhin.itunessearch.constants.Constants
 import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
 import com.kelvinhin.itunessearch.model.SearchViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var searchViewModel: SearchViewModel
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,18 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null).show()
+        }
+
+        binding.searchView.editText.setOnEditorActionListener { textView, actionId, keyEvent ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    Log.d(Constants.LOG_TAG, "search item" + textView.text)
+                    binding.searchBar.text = textView.text
+                    binding.searchView.hide()
+                    true
+                }
+                else -> false
+            }
         }
     }
 
