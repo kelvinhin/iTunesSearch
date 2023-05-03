@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.kelvinhin.itunessearch.adapter.SongItemAdapter
 import com.kelvinhin.itunessearch.constants.Constants
+import com.kelvinhin.itunessearch.data.SearchRequest
 import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
 import com.kelvinhin.itunessearch.model.SearchViewModel
 
@@ -26,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
 
+        binding.viewModel = searchViewModel
+        binding.searchResultRecycler.adapter = SongItemAdapter()
+
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAnchorView(R.id.fab)
@@ -35,9 +40,15 @@ class MainActivity : AppCompatActivity() {
         binding.searchView.editText.setOnEditorActionListener { textView, actionId, keyEvent ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    Log.d(Constants.LOG_TAG, "search item" + textView.text)
+                    Log.d(Constants.LOG_TAG, "search item: " + textView.text)
                     binding.searchBar.text = textView.text
                     binding.searchView.hide()
+                    searchViewModel.doSearch(
+                        SearchRequest(
+                            term = textView.text.toString(),
+                            country = searchViewModel.getCountry().value ?: "hk"
+                        )
+                    )
                     true
                 }
                 else -> false
