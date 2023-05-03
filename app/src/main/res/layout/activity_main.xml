@@ -15,7 +15,6 @@
         android:fitsSystemWindows="true"
         tools:context=".MainActivity">
 
-        <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -58,12 +57,8 @@
             android:layout_height="match_parent"
             android:hint="@string/search_hint"
             app:layout_anchor="@id/search_bar">
-            <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/type_filter_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <include layout="@layout/search_options"/>
 
         </com.google.android.material.search.SearchView>
 
