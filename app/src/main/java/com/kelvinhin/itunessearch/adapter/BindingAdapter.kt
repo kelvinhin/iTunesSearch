@@ -12,8 +12,13 @@ import com.kelvinhin.itunessearch.data.SearchResult
 
 @BindingAdapter("recyclerData")
 fun RecyclerView.bindRecyclerView(data: SearchResult?) {
-    val adapter = this.adapter as SongItemAdapter
-    adapter.submitList(data?.results)
+    data?.let {
+        this.adapter.apply {
+            when (this) {
+                is SongItemAdapter -> submitList(it.results)
+            }
+        }
+    }
 }
 
 @BindingAdapter("imageUrl")

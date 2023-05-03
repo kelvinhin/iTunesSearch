@@ -19,7 +19,7 @@ class SongItemAdapter : ListAdapter<Results, SongItemAdapter.SongItemViewHolder>
 
     companion object DiffCallback : DiffUtil.ItemCallback<Results>() {
         override fun areItemsTheSame(oldItem: Results, newItem: Results): Boolean {
-            return oldItem.trackId == newItem.trackId
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Results, newItem: Results): Boolean {

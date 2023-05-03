@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.kelvinhin.itunessearch.adapter.SongItemAdapter
 import com.kelvinhin.itunessearch.constants.Constants
@@ -16,7 +16,7 @@ import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
 import com.kelvinhin.itunessearch.model.SearchViewModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var searchViewModel: SearchViewModel
+    private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
 
+        binding.lifecycleOwner = this
         binding.viewModel = searchViewModel
         binding.searchResultRecycler.adapter = SongItemAdapter()
 
