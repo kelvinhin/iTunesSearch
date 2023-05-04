@@ -1,5 +1,6 @@
 package com.kelvinhin.itunessearch.adapter
 
+import android.util.Log
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.hbb20.CountryCodePicker
 import com.kelvinhin.itunessearch.R
+import com.kelvinhin.itunessearch.constants.Constants
 import com.kelvinhin.itunessearch.data.SearchResult
 
 @BindingAdapter("recyclerData")
@@ -34,5 +36,8 @@ fun ImageView.bindImage(imgUrl: String?) {
 
 @BindingAdapter("countryValue")
 fun CountryCodePicker.setCountryValue(country: MutableLiveData<String>) {
-    this.setOnCountryChangeListener { country.postValue(this.selectedCountryNameCode) }
+    this.setOnCountryChangeListener {
+        country.postValue(this.selectedCountryNameCode)
+        Log.d(Constants.LOG_TAG, "Selected country: ${this.selectedCountryNameCode}")
+    }
 }

@@ -58,7 +58,9 @@
             android:hint="@string/search_hint"
             app:layout_anchor="@id/search_bar">
 
-            <include layout="@layout/search_options"/>
+            <include
+                android:id="@+id/search_view_options"
+                layout="@layout/search_options"/>
 
         </com.google.android.material.search.SearchView>
 

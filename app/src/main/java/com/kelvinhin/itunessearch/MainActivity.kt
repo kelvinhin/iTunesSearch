@@ -10,14 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.google.android.material.snackbar.Snackbar
 import com.kelvinhin.itunessearch.adapter.SongItemAdapter
+import com.kelvinhin.itunessearch.adapter.setCountryValue
 import com.kelvinhin.itunessearch.constants.Constants
 import com.kelvinhin.itunessearch.data.SearchRequest
 import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
+import com.kelvinhin.itunessearch.databinding.ViewSelectCountryBinding
 import com.kelvinhin.itunessearch.model.SearchViewModel
 
 class MainActivity : AppCompatActivity() {
     private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private lateinit var menuBinding: ViewSelectCountryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -40,13 +43,14 @@ class MainActivity : AppCompatActivity() {
         binding.searchView.editText.setOnEditorActionListener { textView, actionId, keyEvent ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    Log.d(Constants.LOG_TAG, "search item: " + textView.text)
+                    Log.d(Constants.LOG_TAG, "search item: ${textView.text}")
                     binding.searchBar.text = textView.text
                     binding.searchView.hide()
                     searchViewModel.doSearch(
                         SearchRequest(
                             term = textView.text.toString(),
-                            country = searchViewModel.getCountry().value ?: "hk"
+                            country = searchViewModel.getCountry().value ?: "hk",
+                            entity = searchViewModel.getSelectedEntity(binding.searchViewOptions.chipGroupFilter.checkedChipId)
                         )
                     )
                     true
@@ -59,6 +63,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
+        with(menu) {
+            findItem(R.id.action_country_picker)?.actionView?.let {
+                menuBinding = ViewSelectCountryBinding.bind(it)
+            }
+        }
+        menuBinding.countryPicker.setCountryValue(searchViewModel.getCountry())
         return true
     }
 
