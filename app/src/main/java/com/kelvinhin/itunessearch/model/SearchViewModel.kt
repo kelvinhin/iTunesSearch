@@ -14,39 +14,43 @@ import com.kelvinhin.itunessearch.repository.SearchRepository
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
+    private val _request = MutableLiveData<SearchRequest>()
+    val request: LiveData<SearchRequest> = _request
     private val _response = MutableLiveData<SearchResult>()
     val response: LiveData<SearchResult> = _response
     private val country = MutableLiveData<String>()
-    private val entity = MutableLiveData<String>()
 
     fun getCountry(): MutableLiveData<String> {
         return country
     }
 
     fun setCountry(country: String) {
+        request.value?.country = country
         this.country.postValue(country)
     }
 
-    fun getEntity(): MutableLiveData<String> {
-        return entity
+    fun constructRequest (keyword: String, selectedEntityId: Int) {
+        _request.value = SearchRequest(
+            term = keyword,
+            country = getCountry().value ?: Constants.DEFAULT_LOCALE,
+            entity = getSelectedEntity(selectedEntityId)
+        )
     }
 
-    fun setEntity(entity: String) {
-        this.entity.postValue(entity)
-    }
-
-    fun doSearch(request: SearchRequest) {
+    fun doSearch() {
         viewModelScope.launch {
             try {
-                val result = SearchRepository.iTunesApi.doSearch(
-                    request.term,
-                    request.country,
-                    request.media,
-                    request.entity,
-                    request.offset,
-                    request.limit
-                )
-                _response.value = result
+                request.value?.let {
+                    val result = SearchRepository.iTunesApi.doSearch(
+                        it.term,
+                        it.country,
+                        it.media,
+                        it.entity,
+                        it.offset,
+                        it.limit
+                    )
+                    _response.value = result
+                }
             } catch (e: Exception) {
                 Log.e(Constants.LOG_TAG, "Do Search error: " + e.message)
             }

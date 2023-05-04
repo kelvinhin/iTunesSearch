@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.kelvinhin.itunessearch.adapter.SongItemAdapter
 import com.kelvinhin.itunessearch.adapter.setCountryValue
 import com.kelvinhin.itunessearch.constants.Constants
-import com.kelvinhin.itunessearch.data.SearchRequest
 import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
 import com.kelvinhin.itunessearch.databinding.ViewSelectCountryBinding
 import com.kelvinhin.itunessearch.model.SearchViewModel
@@ -21,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val searchViewModel: SearchViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private lateinit var menuBinding: ViewSelectCountryBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -46,13 +46,11 @@ class MainActivity : AppCompatActivity() {
                     Log.d(Constants.LOG_TAG, "search item: ${textView.text}")
                     binding.searchBar.text = textView.text
                     binding.searchView.hide()
-                    searchViewModel.doSearch(
-                        SearchRequest(
-                            term = textView.text.toString(),
-                            country = searchViewModel.getCountry().value ?: "hk",
-                            entity = searchViewModel.getSelectedEntity(binding.searchViewOptions.chipGroupFilter.checkedChipId)
-                        )
+                    searchViewModel.constructRequest(
+                        keyword = textView.text.toString(),
+                        selectedEntityId = binding.searchViewOptions.chipGroupFilter.checkedChipId
                     )
+                    searchViewModel.doSearch()
                     true
                 }
                 else -> false
@@ -68,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 menuBinding = ViewSelectCountryBinding.bind(it)
             }
         }
-        menuBinding.countryPicker.setCountryValue(searchViewModel.getCountry())
+        menuBinding.countryPicker.setCountryValue(searchViewModel)
         return true
     }
 
