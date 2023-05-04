@@ -1,6 +1,7 @@
 package com.kelvinhin.itunessearch.adapter
 
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -10,6 +11,7 @@ import com.hbb20.CountryCodePicker
 import com.kelvinhin.itunessearch.R
 import com.kelvinhin.itunessearch.constants.Constants
 import com.kelvinhin.itunessearch.data.SearchResult
+import com.kelvinhin.itunessearch.model.ApiStatus
 import com.kelvinhin.itunessearch.model.SearchViewModel
 
 @BindingAdapter("recyclerData")
@@ -39,5 +41,24 @@ fun CountryCodePicker.setCountryValue(viewModel: SearchViewModel) {
         viewModel.setCountry(this.selectedCountryNameCode)
         Log.d(Constants.LOG_TAG, "Selected country: ${this.selectedCountryNameCode}")
         viewModel.doSearch()
+    }
+}
+
+@BindingAdapter("ApiStatus")
+fun ImageView.bindApiStatus(status: ApiStatus?) {
+    status?.let {
+        when (it) {
+            ApiStatus.LOADING -> {
+                this.visibility = View.VISIBLE
+                this.setImageResource(R.drawable.ic_downloading_24)
+            }
+            ApiStatus.SUCCESS -> {
+                this.visibility = View.GONE
+            }
+            ApiStatus.ERROR -> {
+                this.visibility = View.VISIBLE
+                this.setImageResource(R.drawable.ic_error_24)
+            }
+        }
     }
 }

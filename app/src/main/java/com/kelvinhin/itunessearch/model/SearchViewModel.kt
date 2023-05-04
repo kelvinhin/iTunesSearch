@@ -13,11 +13,18 @@ import com.kelvinhin.itunessearch.data.SearchResult
 import com.kelvinhin.itunessearch.repository.SearchRepository
 import kotlinx.coroutines.launch
 
+enum class ApiStatus { LOADING, SUCCESS, ERROR }
+
 class SearchViewModel : ViewModel() {
     private val _request = MutableLiveData<SearchRequest>()
     val request: LiveData<SearchRequest> = _request
+
     private val _response = MutableLiveData<SearchResult>()
     val response: LiveData<SearchResult> = _response
+
+    private val _status = MutableLiveData<ApiStatus>()
+    val status: LiveData<ApiStatus> = _status
+
     private val country = MutableLiveData<String>()
 
     fun getCountry(): MutableLiveData<String> {
@@ -39,6 +46,7 @@ class SearchViewModel : ViewModel() {
 
     fun doSearch() {
         viewModelScope.launch {
+            _status.value = ApiStatus.LOADING
             try {
                 request.value?.let {
                     val result = SearchRepository.iTunesApi.doSearch(
@@ -50,9 +58,11 @@ class SearchViewModel : ViewModel() {
                         it.limit
                     )
                     _response.value = result
+                    _status.value = ApiStatus.SUCCESS
                 }
             } catch (e: Exception) {
                 Log.e(Constants.LOG_TAG, "Do Search error: " + e.message)
+                _status.value = ApiStatus.ERROR
             }
         }
     }
