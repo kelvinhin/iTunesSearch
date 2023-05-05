@@ -7,4 +7,6 @@
     <string name="type_song">Song</string>
     <string name="type_album">Album</string>
     <string name="type_mv">MV</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>

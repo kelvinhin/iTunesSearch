@@ -43,11 +43,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize" />
 
-            <com.google.android.material.search.SearchBar
-                android:id="@+id/search_bar"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/search_hint" />
+                android:paddingBottom="8dp">
+
+                <com.google.android.material.search.SearchBar
+                    android:id="@+id/search_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search_hint"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <Button
+                    android:id="@+id/btn_previous"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/previous"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    app:previousBtnVisibility="@{viewModel.pageNumber}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_next"
+                    app:layout_constraintTop_toBottomOf="@id/search_bar"/>
+
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    app:nextBtnVisibility="@{viewModel.response.resultCount}"
+                    app:layout_constraintStart_toEndOf="@id/btn_previous"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/search_bar"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -75,9 +113,10 @@
 
         <ImageView
             android:id="@+id/img_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
+            android:visibility="gone"
             app:ApiStatus="@{viewModel.status}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

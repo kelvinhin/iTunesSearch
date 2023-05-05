@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d(Constants.LOG_TAG, "search item: ${textView.text}")
                     binding.searchBar.text = textView.text
                     binding.searchView.hide()
-                    searchViewModel.constructRequest(
+                    searchViewModel.constructInitSearchRequest(
                         keyword = textView.text.toString(),
                         selectedEntityId = binding.searchViewOptions.chipGroupFilter.checkedChipId
                     )
@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        //TODO handle previous and next page buttons
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -2,6 +2,7 @@ package com.kelvinhin.itunessearch.adapter
 
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -10,6 +11,7 @@ import coil.load
 import com.hbb20.CountryCodePicker
 import com.kelvinhin.itunessearch.R
 import com.kelvinhin.itunessearch.constants.Constants
+import com.kelvinhin.itunessearch.constants.Url
 import com.kelvinhin.itunessearch.data.SearchResult
 import com.kelvinhin.itunessearch.model.ApiStatus
 import com.kelvinhin.itunessearch.model.SearchViewModel
@@ -30,8 +32,30 @@ fun ImageView.bindImage(imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         this.load(imgUri) {
-            placeholder(R.drawable.ic_downloading_24)
+            placeholder(R.drawable.loading_animation)
             error(R.drawable.ic_broken_image_24)
+        }
+    }
+}
+
+@BindingAdapter("previousBtnVisibility")
+fun Button.bindPreviousBtnVisbility(pageNumber: Int?) {
+    pageNumber?.let {
+        if (it == 0) {
+            this.visibility = View.GONE
+        } else {
+            this.visibility = View.VISIBLE
+        }
+    }
+}
+
+@BindingAdapter("nextBtnVisibility")
+fun Button.bindNextBtnVisibility(resultCount: Int?) {
+    resultCount?.let {
+        if (it == Url.PAGE_SIZE) {
+            this.visibility = View.VISIBLE
+        } else {
+            this.visibility = View.GONE
         }
     }
 }
@@ -50,7 +74,7 @@ fun ImageView.bindApiStatus(status: ApiStatus?) {
         when (it) {
             ApiStatus.LOADING -> {
                 this.visibility = View.VISIBLE
-                this.setImageResource(R.drawable.ic_downloading_24)
+                this.setImageResource(R.drawable.loading_animation)
             }
             ApiStatus.SUCCESS -> {
                 this.visibility = View.GONE

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.kelvinhin.itunessearch.R
 import com.kelvinhin.itunessearch.constants.Constants
 import com.kelvinhin.itunessearch.constants.MediaEntities
+import com.kelvinhin.itunessearch.constants.Url
 import com.kelvinhin.itunessearch.data.SearchRequest
 import com.kelvinhin.itunessearch.data.SearchResult
 import com.kelvinhin.itunessearch.repository.SearchRepository
@@ -25,6 +26,9 @@ class SearchViewModel : ViewModel() {
     private val _status = MutableLiveData<ApiStatus>()
     val status: LiveData<ApiStatus> = _status
 
+    private val _pageNumber = MutableLiveData<Int>()
+    val pageNumber: LiveData<Int> = _pageNumber
+
     private val country = MutableLiveData<String>()
 
     fun getCountry(): MutableLiveData<String> {
@@ -36,12 +40,21 @@ class SearchViewModel : ViewModel() {
         this.country.postValue(country)
     }
 
-    fun constructRequest (keyword: String, selectedEntityId: Int) {
+    fun constructInitSearchRequest (keyword: String, selectedEntityId: Int) {
         _request.value = SearchRequest(
             term = keyword,
             country = getCountry().value ?: Constants.DEFAULT_LOCALE,
             entity = getSelectedEntity(selectedEntityId)
         )
+    }
+
+    fun constructJumpPageSearchRequest() {
+        val previousRequest = request.value
+        previousRequest?.let { requestContent ->
+            val currentPage = pageNumber.value ?: 0
+            requestContent.offset = currentPage * Url.PAGE_SIZE
+            _request.value = requestContent
+        }
     }
 
     fun doSearch() {
