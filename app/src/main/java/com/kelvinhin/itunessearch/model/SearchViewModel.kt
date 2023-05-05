@@ -15,6 +15,7 @@ import com.kelvinhin.itunessearch.repository.SearchRepository
 import kotlinx.coroutines.launch
 
 enum class ApiStatus { LOADING, SUCCESS, ERROR }
+enum class PageDirection { PREVIOUS, NEXT }
 
 class SearchViewModel : ViewModel() {
     private val _request = MutableLiveData<SearchRequest>()
@@ -48,7 +49,22 @@ class SearchViewModel : ViewModel() {
         )
     }
 
-    fun constructJumpPageSearchRequest() {
+    fun constructJumpPageSearchRequest(pageDirection: PageDirection) {
+        _pageNumber.value?.let { page ->
+            when (pageDirection) {
+                PageDirection.PREVIOUS -> {
+                    if (page > 0) {
+                        _pageNumber.value = page - 1
+                    } else {
+                        _pageNumber.value = 0
+                    }
+                }
+                PageDirection.NEXT -> {
+                    _pageNumber.value = page + 1
+                }
+            }
+        }
+
         val previousRequest = request.value
         previousRequest?.let { requestContent ->
             val currentPage = pageNumber.value ?: 0
@@ -70,6 +86,7 @@ class SearchViewModel : ViewModel() {
                         it.offset,
                         it.limit
                     )
+                    _pageNumber.value = pageNumber.value ?: 0
                     _response.value = result
                     _status.value = ApiStatus.SUCCESS
                 }

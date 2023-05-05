@@ -14,6 +14,7 @@ import com.kelvinhin.itunessearch.adapter.setCountryValue
 import com.kelvinhin.itunessearch.constants.Constants
 import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
 import com.kelvinhin.itunessearch.databinding.ViewSelectCountryBinding
+import com.kelvinhin.itunessearch.model.PageDirection
 import com.kelvinhin.itunessearch.model.SearchViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -58,6 +59,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         //TODO handle previous and next page buttons
+        binding.btnPrevious.setOnClickListener {
+            Log.d(Constants.LOG_TAG, "Original page number: ${searchViewModel.pageNumber.value}")
+            searchViewModel.constructJumpPageSearchRequest(PageDirection.PREVIOUS)
+            Log.d(Constants.LOG_TAG, "New page number: ${searchViewModel.pageNumber.value}")
+            searchViewModel.doSearch()
+        }
+
+        binding.btnNext.setOnClickListener {
+            Log.d(Constants.LOG_TAG, "Original page number: ${searchViewModel.pageNumber.value}")
+            searchViewModel.constructJumpPageSearchRequest(PageDirection.NEXT)
+            Log.d(Constants.LOG_TAG, "New page number: ${searchViewModel.pageNumber.value}")
+            searchViewModel.doSearch()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
