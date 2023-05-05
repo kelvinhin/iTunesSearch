@@ -70,7 +70,6 @@ class SearchViewModel : ViewModel() {
     fun getSelectedEntity (selectedEntityId: Int): String? {
         return when (selectedEntityId) {
             R.id.chip_song -> MediaEntities.SONG
-            R.id.chip_artist -> MediaEntities.MUSIC_ARTIST
             R.id.chip_album -> MediaEntities.ALBUM
             R.id.chip_mv -> MediaEntities.MUSIC_VIDEO
             else -> null

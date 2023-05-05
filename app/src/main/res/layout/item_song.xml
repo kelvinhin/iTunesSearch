@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.AppCompat.Title"
                     android:padding="4dp"
-                    android:text="@{result.trackName}"
+                    android:text="@{result.trackName ?? result.collectionName}"
                     tools:text="@tools:sample/full_names"
                     app:layout_constraintStart_toEndOf="@id/image_thumbnail"
                     app:layout_constraintEnd_toEndOf="parent"
