@@ -38,6 +38,18 @@ fun ImageView.bindImage(imgUrl: String?) {
     }
 }
 
+@BindingAdapter("largeImageUrl")
+fun ImageView.bindLargeImage(imgUrl: String?) {
+    imgUrl?.let {
+        val largeImgUrl = imgUrl.replace(Url.SMALL_IMG_PATH, Url.LARGE_IMG_PATH)
+        val imgUri = largeImgUrl.toUri().buildUpon().scheme("https").build()
+        this.load(imgUri) {
+            placeholder(R.drawable.loading_animation)
+            error(R.drawable.ic_broken_image_24)
+        }
+    }
+}
+
 @BindingAdapter("previousBtnVisibility")
 fun Button.bindPreviousBtnVisbility(pageNumber: Int?) {
     pageNumber?.let {
