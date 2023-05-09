@@ -48,12 +48,25 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp">
 
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_begin="16dp"
+                    android:orientation="vertical"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_end="16dp"
+                    android:orientation="vertical"/>
+
                 <com.google.android.material.search.SearchBar
                     android:id="@+id/search_bar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/search_hint"
-                    android:layout_marginTop="4dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -63,11 +76,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/previous"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="4dp"
                     android:visibility="gone"
                     app:previousBtnVisibility="@{viewModel.pageNumber}"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintEnd_toStartOf="@id/btn_next"
                     app:layout_constraintTop_toBottomOf="@id/search_bar"/>
 
@@ -76,13 +89,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/next"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
                     android:visibility="gone"
                     app:nextBtnVisibility="@{viewModel.response.resultCount}"
                     app:layout_constraintStart_toEndOf="@id/btn_previous"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintTop_toBottomOf="@id/search_bar"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -107,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/standard_margin"
             android:layout_marginBottom="16dp"
             app:srcCompat="@android:drawable/star_big_off" />
 

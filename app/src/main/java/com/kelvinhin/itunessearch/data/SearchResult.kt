@@ -1,15 +1,19 @@
 package com.kelvinhin.itunessearch.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class SearchResult(
     val resultCount: Int,
     val results: List<Results>
 )
 
+@Entity
 data class Results(
     val wrapperType: String,
     val kind: String,
     val artistId: Int,
-    val collectionId: Int,
+    @PrimaryKey val collectionId: Int,
     val trackId: Int,
     val artistName: String,
     val collectionName: String,

@@ -24,14 +24,14 @@
                 android:id="@+id/guideline_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintGuide_begin="16dp"
+                app:layout_constraintGuide_begin="@dimen/standard_margin"
                 android:orientation="vertical"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintGuide_end="16dp"
+                app:layout_constraintGuide_end="@dimen/standard_margin"
                 android:orientation="vertical"/>
 
             <com.google.android.material.bottomsheet.BottomSheetDragHandleView
