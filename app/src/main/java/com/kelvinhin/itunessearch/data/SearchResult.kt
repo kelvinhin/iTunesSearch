@@ -1,7 +1,9 @@
 package com.kelvinhin.itunessearch.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 data class SearchResult(
     val resultCount: Int,
@@ -9,6 +11,7 @@ data class SearchResult(
 )
 
 @Entity
+@Parcelize
 data class Results(
     val wrapperType: String,
     val kind: String,
@@ -41,4 +44,4 @@ data class Results(
     val currency: String,
     val primaryGenreName: String,
     val isStreamable: Boolean
-)
+) : Parcelable

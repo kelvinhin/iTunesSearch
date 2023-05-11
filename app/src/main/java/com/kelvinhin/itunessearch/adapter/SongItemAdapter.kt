@@ -8,9 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kelvinhin.itunessearch.data.Results
 import com.kelvinhin.itunessearch.databinding.ItemSongBinding
 
-class SongItemAdapter : ListAdapter<Results, SongItemAdapter.SongItemViewHolder>(DiffCallback) {
+class SongItemAdapter(private val onItemClick: (Results) -> Unit) : ListAdapter<Results, SongItemAdapter.SongItemViewHolder>(DiffCallback) {
 
-    class SongItemViewHolder(private var binding: ItemSongBinding) : RecyclerView.ViewHolder(binding.root) {
+    class SongItemViewHolder(private var binding: ItemSongBinding, onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                onItemClicked(bindingAdapterPosition)
+            }
+        }
+
         fun bind (results: Results) {
             binding.result = results
             binding.executePendingBindings()
@@ -29,7 +35,9 @@ class SongItemAdapter : ListAdapter<Results, SongItemAdapter.SongItemViewHolder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongItemViewHolder {
-        return SongItemViewHolder(ItemSongBinding.inflate(LayoutInflater.from(parent.context)))
+        return SongItemViewHolder(ItemSongBinding.inflate(LayoutInflater.from(parent.context))) {
+            onItemClick(getItem(it))
+        }
     }
 
     override fun onBindViewHolder(holder: SongItemViewHolder, position: Int) {

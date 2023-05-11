@@ -1,5 +1,9 @@
 package com.kelvinhin.itunessearch.adapter
 
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -21,7 +25,9 @@ fun RecyclerView.bindRecyclerView(data: SearchResult?) {
     data?.let {
         this.adapter.apply {
             when (this) {
-                is SongItemAdapter -> submitList(it.results)
+                is SongItemAdapter -> submitList(it.results) {
+                    this@bindRecyclerView.smoothScrollToPosition(0)
+                }
             }
         }
     }
@@ -97,4 +103,9 @@ fun ImageView.bindApiStatus(status: ApiStatus?) {
             }
         }
     }
+}
+
+inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
+    SDK_INT > Build.VERSION_CODES.TIRAMISU -> getParcelable(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getParcelable(key) as? T
 }

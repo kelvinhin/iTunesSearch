@@ -16,6 +16,7 @@ import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
 import com.kelvinhin.itunessearch.databinding.ViewSelectCountryBinding
 import com.kelvinhin.itunessearch.model.PageDirection
 import com.kelvinhin.itunessearch.model.SearchViewModel
+import com.kelvinhin.itunessearch.view.SongDetailPopUp
 
 class MainActivity : AppCompatActivity() {
     private val searchViewModel: SearchViewModel by viewModels()
@@ -33,7 +34,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.viewModel = searchViewModel
-        binding.searchResultRecycler.adapter = SongItemAdapter()
+        binding.searchResultRecycler.adapter = SongItemAdapter {
+            val songDetail = SongDetailPopUp()
+            songDetail.arguments = Bundle().apply {
+                putParcelable(SongDetailPopUp.DETAIL_DATA, it)
+            }
+            songDetail.show(supportFragmentManager, SongDetailPopUp.TAG)
+        }
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

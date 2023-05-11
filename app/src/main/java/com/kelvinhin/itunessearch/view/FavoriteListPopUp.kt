@@ -16,6 +16,7 @@ class FavoriteListPopUp : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = ViewFavoriteListPopUpBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         return binding.root
     }
 }
