@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kelvinhin.itunessearch.adapter.parcelable
 import com.kelvinhin.itunessearch.data.Results
 import com.kelvinhin.itunessearch.databinding.ViewSongDetailPopUpBinding
+import com.kelvinhin.itunessearch.model.SongDetailViewModel
+import com.kelvinhin.itunessearch.repository.FavoritesDatabase
 
 class SongDetailPopUp : BottomSheetDialogFragment() {
     companion object {
@@ -15,6 +18,7 @@ class SongDetailPopUp : BottomSheetDialogFragment() {
         const val DETAIL_DATA = "SongDetailData"
     }
 
+    private lateinit var songDetailViewModel: SongDetailViewModel
     private lateinit var binding: ViewSongDetailPopUpBinding
 
     override fun onCreateView(
@@ -23,11 +27,23 @@ class SongDetailPopUp : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = ViewSongDetailPopUpBinding.inflate(inflater)
+        songDetailViewModel = ViewModelProvider(this)[SongDetailViewModel::class.java]
         binding.lifecycleOwner = this.viewLifecycleOwner
+
+        val db = FavoritesDatabase.getInstance(this.requireContext())
+
         arguments?.parcelable<Results>(DETAIL_DATA).let { result ->
             binding.result = result
+            result?.collectionId?.let {id ->
+                songDetailViewModel.checkIsFavorite(db, id)
+            }
             binding.executePendingBindings()
         }
+
+        binding.imgFavorite.setOnClickListener {
+
+        }
+
         return binding.root
     }
 }

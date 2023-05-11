@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         binding.viewModel = searchViewModel
-        binding.searchResultRecycler.adapter = SongItemAdapter {
+        binding.searchResultRecycler.adapter = SongItemAdapter { selectedResult ->
             val songDetail = SongDetailPopUp()
             songDetail.arguments = Bundle().apply {
-                putParcelable(SongDetailPopUp.DETAIL_DATA, it)
+                putParcelable(SongDetailPopUp.DETAIL_DATA, selectedResult)
             }
             songDetail.show(supportFragmentManager, SongDetailPopUp.TAG)
         }
@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         binding.searchView.editText.setOnEditorActionListener { textView, actionId, keyEvent ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    Log.d(Constants.LOG_TAG, "search item: ${textView.text}")
                     binding.searchBar.text = textView.text
                     binding.searchView.hide()
                     searchViewModel.constructInitSearchRequest(
@@ -65,7 +64,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //TODO handle previous and next page buttons
         binding.btnPrevious.setOnClickListener {
             Log.d(Constants.LOG_TAG, "Original page number: ${searchViewModel.pageNumber.value}")
             searchViewModel.constructJumpPageSearchRequest(PageDirection.PREVIOUS)
@@ -82,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         with(menu) {
             findItem(R.id.action_country_picker)?.actionView?.let {
@@ -94,9 +91,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_country_picker -> true
             else -> super.onOptionsItemSelected(item)
