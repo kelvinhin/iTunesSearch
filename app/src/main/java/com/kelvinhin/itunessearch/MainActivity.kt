@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import com.google.android.material.snackbar.Snackbar
 import com.kelvinhin.itunessearch.adapter.SongItemAdapter
 import com.kelvinhin.itunessearch.adapter.setCountryValue
 import com.kelvinhin.itunessearch.constants.Constants
@@ -16,6 +15,7 @@ import com.kelvinhin.itunessearch.databinding.ActivityMainBinding
 import com.kelvinhin.itunessearch.databinding.ViewSelectCountryBinding
 import com.kelvinhin.itunessearch.model.PageDirection
 import com.kelvinhin.itunessearch.model.SearchViewModel
+import com.kelvinhin.itunessearch.view.FavoriteListPopUp
 import com.kelvinhin.itunessearch.view.SongDetailPopUp
 
 class MainActivity : AppCompatActivity() {
@@ -43,9 +43,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
+            val favoritesList = FavoriteListPopUp()
+            favoritesList.show(supportFragmentManager, FavoriteListPopUp.TAG)
         }
 
         binding.searchView.editText.setOnEditorActionListener { textView, actionId, keyEvent ->

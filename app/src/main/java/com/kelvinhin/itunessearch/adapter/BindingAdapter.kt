@@ -16,16 +16,16 @@ import com.hbb20.CountryCodePicker
 import com.kelvinhin.itunessearch.R
 import com.kelvinhin.itunessearch.constants.Constants
 import com.kelvinhin.itunessearch.constants.Url
-import com.kelvinhin.itunessearch.data.SearchResult
+import com.kelvinhin.itunessearch.data.Results
 import com.kelvinhin.itunessearch.model.ApiStatus
 import com.kelvinhin.itunessearch.model.SearchViewModel
 
 @BindingAdapter("recyclerData")
-fun RecyclerView.bindRecyclerView(data: SearchResult?) {
+fun RecyclerView.bindRecyclerView(data: List<Results>?) {
     data?.let {
         this.adapter.apply {
             when (this) {
-                is SongItemAdapter -> submitList(it.results) {
+                is SongItemAdapter -> submitList(it) {
                     this@bindRecyclerView.smoothScrollToPosition(0)
                 }
             }

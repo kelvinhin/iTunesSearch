@@ -28,7 +28,7 @@
                 android:paddingEnd="16dp"
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:recyclerData="@{viewModel.response}"
+                app:recyclerData="@{viewModel.response.results}"
                 tools:listitem="@layout/item_song"/>
 
         </androidx.core.widget.NestedScrollView>

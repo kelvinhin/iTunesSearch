@@ -10,7 +10,6 @@ import com.kelvinhin.itunessearch.adapter.parcelable
 import com.kelvinhin.itunessearch.data.Results
 import com.kelvinhin.itunessearch.databinding.ViewSongDetailPopUpBinding
 import com.kelvinhin.itunessearch.model.SongDetailViewModel
-import com.kelvinhin.itunessearch.repository.FavoritesDatabase
 
 class SongDetailPopUp : BottomSheetDialogFragment() {
     companion object {
@@ -29,19 +28,18 @@ class SongDetailPopUp : BottomSheetDialogFragment() {
         binding = ViewSongDetailPopUpBinding.inflate(inflater)
         songDetailViewModel = ViewModelProvider(this)[SongDetailViewModel::class.java]
         binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.viewHolder = songDetailViewModel
 
-        val db = FavoritesDatabase.getInstance(this.requireContext())
 
-        arguments?.parcelable<Results>(DETAIL_DATA).let { result ->
+
+        arguments?.parcelable<Results>(DETAIL_DATA)?.let { result ->
             binding.result = result
-            result?.collectionId?.let {id ->
-                songDetailViewModel.checkIsFavorite(db, id)
-            }
+            songDetailViewModel.checkIsFavorite(this.requireContext(), result.collectionId)
             binding.executePendingBindings()
-        }
 
-        binding.imgFavorite.setOnClickListener {
-
+            binding.imgFavorite.setOnClickListener {
+                songDetailViewModel.clickFavoriteState(result)
+            }
         }
 
         return binding.root
