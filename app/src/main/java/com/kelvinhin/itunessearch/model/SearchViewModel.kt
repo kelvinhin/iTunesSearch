@@ -75,9 +75,9 @@ class SearchViewModel : ViewModel() {
 
     fun doSearch() {
         viewModelScope.launch {
-            _status.value = ApiStatus.LOADING
             try {
                 request.value?.let {
+                    _status.value = ApiStatus.LOADING
                     val result = SearchRepository.iTunesApi.doSearch(
                         it.term,
                         it.country,
@@ -97,7 +97,7 @@ class SearchViewModel : ViewModel() {
         }
     }
 
-    fun getSelectedEntity (selectedEntityId: Int): String? {
+    private fun getSelectedEntity (selectedEntityId: Int): String? {
         return when (selectedEntityId) {
             R.id.chip_song -> MediaEntities.SONG
             R.id.chip_album -> MediaEntities.ALBUM

@@ -10,4 +10,5 @@
     <string name="previous">Previous</string>
     <string name="next">Next</string>
     <string name="favorite_list_title">My Favorites</string>
+    <string name="search_hint">Search…</string>
 </resources>

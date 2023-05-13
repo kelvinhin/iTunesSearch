@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">iTunes 搜尋</string>
+    <string name="title_country">地區</string>
+    <string name="title_type">分類</string>
+    <string name="type_all">所有</string>
+    <string name="type_artist">歌手</string>
+    <string name="type_song">歌曲</string>
+    <string name="type_album">專輯</string>
+    <string name="type_mv">MV</string>
+    <string name="previous">上一頁</string>
+    <string name="next">下一頁</string>
+    <string name="favorite_list_title">我的最愛</string>
+    <string name="search_hint">搜尋…</string>
+</resources>
