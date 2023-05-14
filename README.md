@@ -1,5 +1,7 @@
 # iTunesSearch
 
+![Main interface](screenshots/main_interface.png)
+
 This is an Android application which can search in iTunes Store's music. This application using [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html) to search the music in iTunes Store and can search for songs, album or artists. It also provided locale selector to filter the search result by locale. This application provide bookmark function to add the music to "favorites" list, and can access on the floating action button on the screen. It have multi language support, currently supported English, Traditional Chinese and Simplified Chinese. 
 
 ## Technical details
@@ -40,3 +42,10 @@ First problem I faced is handling search bar with recycler view. If I follow the
 Second problem is the handling for Country Code Picker. I want to execute search again when user changed locale, it is not a straight forward progress, because country code picker is not in the same view model as the search bar. I make a binding adapter to make the picked locale value can be save to the LiveData in ViewModel of search bar, and also save the search request to the ViewModel. When user changed the locale, can execute new search request by modify the existing one. 
 
 Third problem is the method to store the favorite items. Initially I want to use SharedPreferences to store those data, however, this method is fade out in modern days, and it is not very effective to store large size data. I found recently Android Jetpack have a new library called Room, which is better implementation for SQLite. It is simple and reliable, I can integrate with the response data easily, and it supported coroutine natively. Although this is the first time for me to use this library, I can use this library flawlessly. 
+
+## Screenshots
+
+![Search interface](screenshots/search_interface.png)
+![Song details](screenshots/song_details.png)
+![Favorite list](screenshots/favorite_list.png)
+![Locale selector](screenshots/locale_selector.png)

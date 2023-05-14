@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import com.kelvinhin.itunessearch.adapter.SongItemAdapter
 import com.kelvinhin.itunessearch.adapter.setCountryValue
 import com.kelvinhin.itunessearch.constants.Constants
@@ -23,9 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var menuBinding: ViewSelectCountryBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
