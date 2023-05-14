@@ -57,7 +57,7 @@ fun ImageView.bindLargeImage(imgUrl: String?) {
 }
 
 @BindingAdapter("previousBtnVisibility")
-fun Button.bindPreviousBtnVisbility(pageNumber: Int?) {
+fun Button.bindPreviousBtnVisibility(pageNumber: Int?) {
     pageNumber?.let {
         if (it == 0) {
             this.visibility = View.GONE

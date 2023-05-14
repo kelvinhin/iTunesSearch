@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             songDetail.show(supportFragmentManager, SongDetailPopUp.TAG)
         }
 
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener {
             val favoritesList = FavoriteListPopUp()
             favoritesList.show(supportFragmentManager, FavoriteListPopUp.TAG)
         }
